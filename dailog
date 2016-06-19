@@ -1,0 +1,75 @@
+#!/bin/bash
+######################################################################################
+# Created by Ilya Krasnov on 2016/06/19
+# Captures today's tasks. Prints monthly summary
+######################################################################################
+
+TODAY=`date +%F`
+MONTH=`date +%Y-%m`
+LAST_MONTH=`date -v -20d +%Y-%m`
+FILE=${MONTH}.md
+FILE_LAST_MONTH=${LAST_MONTH}.md
+PDF=${MONTH}.pdf
+PDF_LAST_MONTH=${LAST_MONTH}.pdf
+MONTH_TITLE=`date +'%Y-%m'`
+LAST_MONTH_TITLE=`date -v -20d +'%Y-%m'`
+
+function line_to_file {
+  echo "- $1" >> ${FILE}
+}
+
+function write_log {
+  # Creates monthly file if needed
+  if [ ! -e ${FILE} ]
+  then
+    touch ${FILE}
+    echo "# ${MONTH_TITLE}" >> ${FILE}
+  fi
+
+  # Adds entries new days or appends to existing entry
+  if grep -q "${TODAY}" ${FILE}
+  then
+    while read line
+    do
+      `gsed -i '/${TODAY}/a $line' ${FILE}`
+      line_to_file $line
+    done
+  else
+    printf "\n## ${TODAY} \n" >> ${FILE}
+    while read line
+    do
+      line_to_file $line
+    done
+  fi
+}
+
+function create_and_open_pdf {
+  printf "Generating pdf summary for $1\n"
+  pandoc $2 -s --variable geometry:margin=1in -o $3
+  open $3
+}
+
+function summarize {
+  printf "1 - Generate summary for last month (default)\n"
+  printf "2 - Generate summary for current month\n"
+  read -p 'Please chose an option: ' MONTH
+
+  case $MONTH in
+    1|'')
+      create_and_open_pdf $LAST_MONTH_TITLE $FILE_LAST_MONTH $PDF_LAST_MONTH
+      ;;
+    2)
+      create_and_open_pdf $MONTH_TITLE $FILE $PDF
+      ;;
+  esac
+}
+
+# Main function
+case $1 in
+  '')
+    write_log
+    ;;
+  summary)
+    summarize
+    ;;
+esac
