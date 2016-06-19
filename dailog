@@ -4,13 +4,14 @@
 # Captures today's tasks. Prints monthly summary
 ######################################################################################
 
+DIR="/Users/`whoami`/dailog"
 TODAY=`date +%F`
 MONTH=`date +%Y-%m`
 LAST_MONTH=`date -v -20d +%Y-%m`
-FILE=${MONTH}.md
-FILE_LAST_MONTH=${LAST_MONTH}.md
-PDF=${MONTH}.pdf
-PDF_LAST_MONTH=${LAST_MONTH}.pdf
+FILE=${DIR}/${MONTH}.md
+FILE_LAST_MONTH=${DIR}/${LAST_MONTH}.md
+PDF=${DIR}/${MONTH}.pdf
+PDF_LAST_MONTH=${DIR}/${LAST_MONTH}.pdf
 MONTH_TITLE=`date +'%Y-%m'`
 LAST_MONTH_TITLE=`date -v -20d +'%Y-%m'`
 
@@ -63,6 +64,9 @@ function summarize {
       ;;
   esac
 }
+
+# Create directory in root folder
+[ -d ${DIR} ] || mkdir ${DIR}
 
 # Main function
 case $1 in
