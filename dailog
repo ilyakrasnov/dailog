@@ -16,7 +16,7 @@ MONTH_TITLE=`date +'%Y-%m'`
 LAST_MONTH_TITLE=`date -v -20d +'%Y-%m'`
 
 function line_to_file {
-  echo "- $1" >> ${FILE}
+  echo "- $@" >> ${FILE}
 }
 
 function write_log {
