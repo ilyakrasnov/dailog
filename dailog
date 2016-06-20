@@ -69,6 +69,10 @@ function preview_current_month {
   cat ${FILE}
 }
 
+function edit_current_month {
+  vim ${FILE}
+}
+
 # Create directory in root folder
 [ -d ${DIR} ] || mkdir ${DIR}
 
@@ -79,6 +83,9 @@ case $1 in
     ;;
   preview)
     preview_current_month
+    ;;
+  edit)
+    edit_current_month
     ;;
   summary)
     summarize
