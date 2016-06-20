@@ -70,7 +70,18 @@ function preview_current_month {
 }
 
 function edit_current_month {
-  vim ${FILE}
+  printf "1 - Edit log for last month (default)\n"
+  printf "2 - Edit log for current month\n"
+  read -p 'Please chose an option: ' MONTH
+
+  case $MONTH in
+    1|'')
+      vim ${FILE_LAST_MONTH}
+      ;;
+    2)
+      vim ${FILE}
+      ;;
+  esac
 }
 
 # Create directory in root folder
