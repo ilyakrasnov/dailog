@@ -65,6 +65,10 @@ function summarize {
   esac
 }
 
+function preview_current_month {
+  cat ${FILE}
+}
+
 # Create directory in root folder
 [ -d ${DIR} ] || mkdir ${DIR}
 
@@ -72,6 +76,9 @@ function summarize {
 case $1 in
   '')
     write_log
+    ;;
+  preview)
+    preview_current_month
     ;;
   summary)
     summarize
