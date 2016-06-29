@@ -5,8 +5,9 @@
 ######################################################################################
 
 DIR="/Users/`whoami`/dailog"
-TODAY=`date +%F`
+TODAY=`date +'%F (%A)'`
 MONTH=`date +%Y-%m`
+MONTH_HEADER=`date +%'B %Y'`
 LAST_MONTH=`date -v -20d +%Y-%m`
 FILE=${DIR}/${MONTH}.md
 FILE_LAST_MONTH=${DIR}/${LAST_MONTH}.md
@@ -50,9 +51,9 @@ function create_and_open_pdf {
   open $3
 }
 
-function summarize {
-  printf "1 - Generate summary for last month (default)\n"
-  printf "2 - Generate summary for current month\n"
+function generate_pdf {
+  printf "1 - Generate pdf for last month (default)\n"
+  printf "2 - Generate pdf for current month\n"
   read -p 'Please chose an option: ' MONTH
 
   case $MONTH in
@@ -84,6 +85,21 @@ function edit_current_month {
   esac
 }
 
+function send_email_to {
+  printf "1 - Send email for last month (default)\n"
+  printf "2 - Send email for current month\n"
+  read -p 'Please chose an option: ' MONTH
+
+  case $MONTH in
+    1|'')
+      mutt -a ${PDF_LAST_MONTH} -- $1
+      ;;
+    2)
+      mutt -a ${PDF} -- $1
+      ;;
+  esac
+}
+
 # Create directory in root folder
 [ -d ${DIR} ] || mkdir ${DIR}
 
@@ -98,7 +114,10 @@ case $1 in
   edit)
     edit_current_month
     ;;
-  summary)
-    summarize
+  pdf)
+    generate_pdf
+    ;;
+  email)
+    send_email_to $2
     ;;
 esac
