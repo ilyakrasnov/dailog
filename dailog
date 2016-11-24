@@ -85,21 +85,9 @@ function edit_current_month {
   esac
 }
 
-function send_email_to {
-  printf "1 - Send email for last month (default)\n"
-  printf "2 - Send email for current month\n"
-  read -p 'Please chose an option: ' MONTH
-
-  case $MONTH in
-    1|'')
-      mutt -a ${PDF_LAST_MONTH} -- $1
-      ;;
-    2)
-      mutt -a ${PDF} -- $1
-      ;;
-  esac
+function append_hg_log {
+  hg log -r : -d `date +%F` | grep summary | awk '{first = $1; $1 = ""; print $0; }' | dailog
 }
-
 # Create directory in root folder
 [ -d ${DIR} ] || mkdir ${DIR}
 
@@ -117,7 +105,7 @@ case $1 in
   pdf)
     generate_pdf
     ;;
-  email)
-    send_email_to $2
+  hg)
+    append_hg_log
     ;;
 esac
