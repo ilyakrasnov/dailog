@@ -2,6 +2,8 @@
 A simple command line tool which helps you to quickly capture what you've done at the end of the day. All points are saved in a monthly markdown file. Points entered during one day are gathered under this day's date.
 
 ## Installation
+
+* Install gsed `brew install gnu-sed`
 ```
 TODO
 * clone
