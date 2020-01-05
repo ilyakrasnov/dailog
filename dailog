@@ -4,7 +4,7 @@
 # Captures today's tasks. Prints monthly summary
 ######################################################################################
 
-DIR="/Users/`whoami`/dailog"
+DIR="/Users/`whoami`/Dropbox/dailog"
 TODAY=`date +'%F (%A)'`
 MONTH=`date +%Y-%m`
 MONTH_HEADER=`date +%'B %Y'`
