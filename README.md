@@ -4,6 +4,8 @@ A simple command line tool which helps you to quickly capture what you've done a
 ## Installation
 
 * Install gsed `brew install gnu-sed`
+* Install pandoc `brew install pandoc`
+* Install pdflatex `brew cask install basictex`
 ```
 TODO
 * clone
