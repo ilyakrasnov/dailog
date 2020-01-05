@@ -88,6 +88,11 @@ function edit_current_month {
 function append_hg_log {
   hg log -r : -d `date +%F` | grep summary | awk '{first = $1; $1 = ""; print $0; }' | dailog
 }
+
+function append_git_log {
+  git log --pretty=format:"%s" --after=`date +%F` --until=`date +%F` --author="Ilya" | dailog
+}
+
 # Create directory in root folder
 [ -d ${DIR} ] || mkdir ${DIR}
 
@@ -104,6 +109,9 @@ case $1 in
     ;;
   pdf)
     generate_pdf
+    ;;
+  git)
+    append_git_log
     ;;
   hg)
     append_hg_log
