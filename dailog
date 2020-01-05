@@ -90,8 +90,7 @@ function append_hg_log {
 }
 
 function append_git_log {
-	log=$(git log --pretty=format:"%s" --after="yesterday" --author=`git config user.name`) 
-	echo $log | dailog
+	git log  --oneline --pretty="%s"  --after="yesterday" --author=`git config user.name` | dailog
 }
 
 # Create directory in root folder
